@@ -9,7 +9,6 @@ import { fetchUsers } from "@/app/lib/data";
 const UsersPage = async () => {
   const users = await fetchUsers();
 
-  console.log(users);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -30,38 +29,42 @@ const UsersPage = async () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  src="/noavatar.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                Alex G
-              </div>
-            </td>
-            <td>alex@gmail.com</td>
-            <td>13.01.2022</td>
-            <td>Admin</td>
-            <td>Active</td>
-            <td>
-              <div className={styles.buttons}>
-                <Link href="/dashboard/users/test">
-                  <button className={`${styles.button} ${styles.view}`}>
-                    View
-                  </button>
-                </Link>
-                <Link href="/">
-                  <button className={`${styles.button} ${styles.delete}`}>
-                    Delete
-                  </button>
-                </Link>
-              </div>
-            </td>
-          </tr>
+          {users.map(
+            ({ id, username, email, isAdmin, isActive, img, createdAt }) => (
+              <tr key={id}>
+                <td>
+                  <div className={styles.user}>
+                    <Image
+                      src={img || "/noavatar.png"}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className={styles.userImage}
+                    />
+                    {username}
+                  </div>
+                </td>
+                <td>{email}</td>
+                <td>{createdAt?.toString().slice(4, 16)}</td>
+                <td>{isAdmin ? "Admin" : "Client"}</td>
+                <td>{isActive ? "Active" : "Passive"}</td>
+                <td>
+                  <div className={styles.buttons}>
+                    <Link href={`/dashboard/users/${id}`}>
+                      <button className={`${styles.button} ${styles.view}`}>
+                        View
+                      </button>
+                    </Link>
+                    <Link href="/">
+                      <button className={`${styles.button} ${styles.delete}`}>
+                        Delete
+                      </button>
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
       </table>
       <Pagination />
