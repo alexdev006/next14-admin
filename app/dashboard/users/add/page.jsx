@@ -1,12 +1,16 @@
 "use client";
+
 import { addUser } from "@/app/lib/actions";
 import styles from "@/app/ui/dashboard/users/addUser/addUser.module.css";
+import { toast } from "react-hot-toast";
 
 const AddUserPage = () => {
   const addUserClient = async (formData) => {
     const result = await addUser(formData);
     if (result?.err) {
-      alert(result.err);
+      toast.error(result.err);
+    } else {
+      toast.success("User added!");
     }
   };
 
