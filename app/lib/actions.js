@@ -29,8 +29,9 @@ export const addUser = async (formData) => {
 
     await newUser.save();
   } catch (err) {
-    console.log(err);
-    throw new Error("Failed created user");
+    return {
+      err: "Failed created user",
+    };
   }
 
   revalidatePath("/dashboard/users");
@@ -55,8 +56,9 @@ export const addProduct = async (formData) => {
 
     await newProduct.save();
   } catch (err) {
-    console.log(err);
-    throw new Error("Failed created product");
+    return {
+      err: "Failed created product",
+    };
   }
 
   revalidatePath("/dashboard/products");
@@ -71,8 +73,9 @@ export const deleteProduct = async (formData) => {
 
     await Product.findByIdAndDelete(id);
   } catch (err) {
-    console.log(err);
-    throw new Error("Failed to delete product");
+    return {
+      err: "Failed to delete product",
+    };
   }
 
   revalidatePath("/dashboard/products");
@@ -86,8 +89,9 @@ export const deleteUser = async (formData) => {
 
     await User.findByIdAndDelete(id);
   } catch (err) {
-    console.log(err);
-    throw new Error("Failed to delete User");
+    return {
+      err: "Failed to delete user",
+    };
   }
 
   revalidatePath("/dashboard/products");

@@ -1,10 +1,18 @@
+"use client";
 import { addUser } from "@/app/lib/actions";
 import styles from "@/app/ui/dashboard/users/addUser/addUser.module.css";
 
 const AddUserPage = () => {
+  const addUserClient = async (formData) => {
+    const result = await addUser(formData);
+    if (result?.err) {
+      alert(result.err);
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <form action={addUser} className={styles.form}>
+      <form action={addUserClient} className={styles.form}>
         <input type="text" placeholder="username" name="username" required />
         <input type="email" placeholder="email" name="email" required />
         <input
